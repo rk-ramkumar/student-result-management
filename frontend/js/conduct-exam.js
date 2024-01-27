@@ -90,7 +90,7 @@
         // For example, you can redirect to a results page
         if (result.message === 'Exam submitted successfully.') {
             alert('Exam submitted successfully!');
-            window.location.href = '/result.html'; 
+            window.location.href = '/frontend/result.html'; 
         } else {
             alert('Failed to submit the exam.');
         }

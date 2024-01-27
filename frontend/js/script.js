@@ -25,7 +25,7 @@ async function register() {
         if (result === 'Registration successful.') {
             // Redirect to the dashboard or another page
             console.log(window.location.href)
-            window.location.href = '/dashboard.html';
+            window.location.href = '/frontend/dashboard.html';
         }
     } catch (error) {
         console.error('Error during registration:', error);
@@ -51,7 +51,7 @@ async function login() {
         // Check if login is successful before redirecting
         if (result === 'Login successful.') {
             // Redirect to the dashboard or another page
-            window.location.href = '/dashboard.html';
+            window.location.href = '/frontend/dashboard.html';
         }
     } catch (error) {
         console.error('Error during login:', error);
