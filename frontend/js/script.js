@@ -1,3 +1,4 @@
+
 async function register() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
@@ -20,28 +21,40 @@ async function register() {
 
         const result = await response.text();
         alert(result);
+
+        if (result === 'Registration successful.') {
+            // Redirect to the dashboard or another page
+            window.location.href = '/dashboard.html';
+        }
     } catch (error) {
         console.error('Error during registration:', error);
     }
 }
 
-function login() {
+async function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    fetch('http://localhost:3000/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-    })
-    .then(response => response.text())
-    .then(result => {
+    try {
+        const response = await fetch(`http://localhost:3000/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+        });
+
+        const result = await response.text();
         alert(result);
-    })
-    .catch(error => {
+
+        // Check if login is successful before redirecting
+        if (result === 'Login successful.') {
+            // Redirect to the dashboard or another page
+            window.location.href = '/dashboard.html';
+        }
+    } catch (error) {
         console.error('Error during login:', error);
-    });
+    }
 }
+
 
