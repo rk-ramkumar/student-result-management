@@ -1,0 +1,102 @@
+/* result.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.result-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #007bff;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+.filter-options {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+label {
+    color: #555;
+    margin-bottom: 8px;
+}
+
+select {
+    padding: 8px;
+    margin-right: 10px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.results-section {
+    margin-bottom: 20px;
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tfoot {
+    background-color: #007bff;
+    color: #fff;
+}
+
+footer {
+    color: #777;
+    margin-top: 20px;
+}

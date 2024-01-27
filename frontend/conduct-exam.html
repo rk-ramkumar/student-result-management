@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conduct Example Exam - SRMS</title>
+    <link rel="stylesheet" href="./css/conduct-exam.css">
+</head>
+<body>
+    <div class="conduct-exam-container">
+        <h1>Conduct Example Exam</h1>
+
+        <label for="studentName">Student Name:</label>
+        <input type="text" id="studentName" name="studentName" required>
+
+        <button onclick="fetchAndDisplayExampleExam()">Start Example Exam</button>
+
+        <section class="exam-questions" id="examQuestionsSection">
+            <!-- Exam questions will be dynamically added here -->
+        </section>
+
+        <button onclick="submitExampleExam()">Submit Exam</button>
+
+        <script src="./js/conduct-exam.js"></script> 
+    </div>
+</body>
+</html>

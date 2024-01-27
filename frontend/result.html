@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Results - SRMS</title>
+    <link rel="stylesheet" href="./css/result.css"> 
+</head>
+<body>
+    <div class="result-container">
+        <label for="studentName">Enter Student Name:</label>
+        <input type="text" id="studentName" name="studentName" required>
+
+        <label for="exam">Select Exam:</label>
+        <select id="exam" name="exam">
+            <option value="exam1">Exam 1</option>
+            <option value="exam2">Exam 2</option>
+            <!-- Add more exam options as needed -->
+        </select>
+
+        <label for="subject">Select Subject:</label>
+        <select id="subject" name="subject">
+            <option value="all">All Subjects</option>
+            <option value="math">Math</option>
+            <option value="biology">Biology</option>
+            <!-- Add more subject options as needed -->
+        </select>
+
+        <button onclick="getResults()">Get Results</button>
+
+        <section class="results-section" id="resultsSection">
+            <!-- Exam results will be dynamically added here -->
+        </section>
+
+        <footer>
+            <p>&copy; 2024 Student Result Management System</p>
+        </footer>
+
+        <script src="./js/result.js"></script>
+    </div>
+</body>
+</html>

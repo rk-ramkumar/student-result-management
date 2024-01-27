@@ -47,6 +47,17 @@ const userSchema = new mongoose.Schema({
     password: String,
 });
 
+const examSchema = new mongoose.Schema({
+    title: {
+      type: String,
+      required: true,
+    },
+    questions: {
+      type: [String],
+      required: true,
+    },
+});
+
 const Stat = mongoose.model('Stat', new mongoose.Schema({
     title: String,
     value: String
@@ -55,6 +66,15 @@ const Stat = mongoose.model('Stat', new mongoose.Schema({
 const RecentActivity = mongoose.model('RecentActivity', new mongoose.Schema({
     activity: String
 }));
+  
+const Exam = mongoose.model('Exam', examSchema);
+
+const ExamResult = mongoose.model('ExamResult', new mongoose.Schema({
+    studentName: String,
+    score: Number,
+    grade: String,
+}));
+
 
 const User = mongoose.model('User', userSchema);
 
@@ -75,7 +95,119 @@ app.get('/stats', async (req, res) => {
 app.get('/recent-activity', async (req, res) => {
    
 });
+
+
+// Endpoint to create an exam
+app.post('/create-exam', async (req, res) => {
+    try {
+        const { examTitle, questions } = req.body;
+
+        // Validate if examTitle and questions are present in the request body
+        if (!examTitle || !questions || !Array.isArray(questions) || questions.length === 0) {
+            return res.status(400).json({ error: 'Invalid exam details in the request.' });
+        }
+
+        // Save the exam to the database or perform any required actions
+        const newExam = new Exam({
+            title: examTitle,
+            questions,
+        });
+        await newExam.save();
+
+        res.status(201).json({ message: 'Exam created successfully.' });
+    } catch (error) {
+        console.error('Error creating exam:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// Endpoint to fetch the example exam
+app.get('/exams/example-exam', async (req, res) => {
+    try {
+      const exampleExam = await Exam.findOne({ title: 'Example Exam' });
   
+      if (!exampleExam) {
+        return res.status(404).json({ error: 'Example exam not found.' });
+      }
+  
+      res.status(200).json(exampleExam);
+    } catch (error) {
+      console.error('Error fetching example exam:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
+  // Endpoint to conduct the exam
+  app.post('/conduct-exam', async (req, res) => {
+    try {
+      const { studentName, examTitle, responses } = req.body;
+  
+      // Retrieve the exam from the database based on the title
+      const exam = await Exam.findOne({ title: examTitle });
+  
+      if (!exam) {
+        return res.status(404).json({ error: 'Exam not found.' });
+      }
+  
+      // Evaluate the responses and calculate the score (You may customize this based on your scoring logic)
+      const score = evaluateExam(responses, exam);
+  
+      // Save the exam result to the database or perform any required actions
+      const examResult = new ExamResult({
+        studentName,
+        examTitle,
+        score,
+        responses,
+      });
+      await examResult.save();
+  
+      // Return the exam result to the client
+      res.status(200).json({ message: 'Exam conducted successfully.', score });
+    } catch (error) {
+      console.error('Error conducting exam:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
+  // Function to evaluate the exam (customize based on your scoring logic)
+  function evaluateExam(responses, exam) {
+    // Example: Calculate the score based on correct answers
+    let score = 0;
+    for (let i = 0; i < responses.length; i++) {
+      if (responses[i] === exam.questions[i].correctOption) {
+        score++;
+      }
+    }
+    return score;
+  }
+  
+
+  
+// Endpoint to get exam results
+
+app.get('/results', async (req, res) => {
+    try {
+        const { studentName, exam, subject } = req.query;
+        
+        await mongoose.connect(uri, clientOptions);
+        
+        const query = {
+            studentName: studentName,
+            exam: exam,
+            ...(subject !== 'all' && { subject: subject }),
+        };
+
+        const results = await ExamResult.find(query);
+
+        res.json(results);
+    } catch (error) {
+        console.error('Error fetching exam results:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
 // Registration Route
 app.post('/register', async (req, res) => {
     try {
