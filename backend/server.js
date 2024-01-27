@@ -1,12 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require("cors")
 const bcrypt = require('bcrypt');
 require('dotenv').config()
 
 const app = express();
 const PORT =  process.env.PORT || 4000;;
 const uri = process.env.DATABASE_URL;
+app.use(cors())
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -27,7 +29,6 @@ async function run() {
 }
 run().catch(console.dir);
 
-
 const userSchema = new mongoose.Schema({
     username: String,
     password: String,
@@ -38,6 +39,8 @@ const User = mongoose.model('User', userSchema);
 // Registration Route
 app.post('/register', async (req, res) => {
     try {
+        await mongoose.connect(uri, clientOptions)
+
         const { username, password } = req.body;
 
         // Check if the username already exists
@@ -64,10 +67,10 @@ app.post('/register', async (req, res) => {
 
 // Login Route
 app.post('/login', async (req, res) => {
-    console.log(res)
     try {
+        await mongoose.connect(uri, clientOptions)
+
         const { username, password } = req.body;
-        console.log(username)
         // Find the user in the database
         const user = await User.findOne({ username });
         if (!user) {

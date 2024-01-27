@@ -9,18 +9,28 @@
 <body>
     <div class="login-container">
         <h1>Login to SRMS</h1>
-        <form action="/login" method="post">
+        <form id="loginForm">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
 
-            <button type="submit" onclick="login()">Login</button>
+            <button type="submit">Login</button>
         </form>
 
         <p>Don't have an account? <a href="register.html">Register here</a></p>
         <script src="js/script.js"></script>
     </div>
+    <script>
+        // Add an event listener for form submission
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+
+            // Call the login function
+            login();
+        });
+    </script>
 </body>
 </html>

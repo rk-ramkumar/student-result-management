@@ -9,7 +9,7 @@
 <body>
     <div class="register-container">
         <h1>Register for SRMS</h1>
-        <form action="/register" method="post">
+        <form id="registerForm">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
 
@@ -23,6 +23,18 @@
         </form>
 
         <p>Already have an account? <a href="login.html">Login here</a></p>
+        <script src="js/script.js"></script>
+
     </div>
+    <script>
+        // Add an event listener for form submission
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+
+            // Call the login function
+            register();
+        });
+    </script>
 </body>
 </html>

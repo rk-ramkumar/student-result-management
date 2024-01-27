@@ -1,6 +1,13 @@
 async function register() {
-    const username = document.getElementById('register-username').value;
-    const password = document.getElementById('register-password').value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+
+    if (password !== confirmPassword){
+        alert("Password misMatch")
+
+        return
+    }
 
     try {
         const response = await fetch('http://localhost:3000/register', {
@@ -18,23 +25,23 @@ async function register() {
     }
 }
 
-async function login() {
-    console.log(document.getElementById("username"))
-    const username = document.getElementById('login-username').value;
-    const password = document.getElementById('login-password').value;
+function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-    try {
-        const response = await fetch('http://localhost:3000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-        });
-
-        const result = await response.text();
+    fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+    })
+    .then(response => response.text())
+    .then(result => {
         alert(result);
-    } catch (error) {
+    })
+    .catch(error => {
         console.error('Error during login:', error);
-    }
+    });
 }
+
