@@ -5,6 +5,19 @@ const cors = require("cors")
 const bcrypt = require('bcrypt');
 require('dotenv').config()
 
+// Dummy data for testing
+const initialStats = [
+  { title: 'Total Students', value: '500' },
+  { title: 'Exams Conducted', value: '20' },
+  { title: 'Average Score', value: '85%' }
+];
+
+const initialRecentActivity = [
+  'User John Doe conducted an exam on Biology - 01/25/2024',
+  'User Jane Smith viewed student results - 01/24/2024'
+  // Add more dummy recent activities as needed
+];
+
 const app = express();
 const PORT =  process.env.PORT || 4000;;
 const uri = process.env.DATABASE_URL;
@@ -34,8 +47,35 @@ const userSchema = new mongoose.Schema({
     password: String,
 });
 
+const Stat = mongoose.model('Stat', new mongoose.Schema({
+    title: String,
+    value: String
+}));
+
+const RecentActivity = mongoose.model('RecentActivity', new mongoose.Schema({
+    activity: String
+}));
+
 const User = mongoose.model('User', userSchema);
 
+// Endpoint to get statistics
+app.get('/stats', async (req, res) => {
+    try {
+        await mongoose.connect(uri, clientOptions)
+    
+        const stats = await Stat.find();
+        res.json(stats);  
+    } catch (error) {
+        console.error('Error fetching statistics:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+  
+// Endpoint to get recent activity
+app.get('/recent-activity', async (req, res) => {
+   
+});
+  
 // Registration Route
 app.post('/register', async (req, res) => {
     try {

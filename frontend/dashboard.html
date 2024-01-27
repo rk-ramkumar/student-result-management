@@ -12,24 +12,8 @@
             <h1>Welcome to the Student Result Management System Dashboard</h1>
         </header>
 
-        <section class="stats-section">
+        <section class="stats-section" id="statsSection">
             <h2>Statistics</h2>
-            <div class="stats-container">
-                <div class="stat-box">
-                    <h3>Total Students</h3>
-                    <p>500</p>
-                </div>
-
-                <div class="stat-box">
-                    <h3>Exams Conducted</h3>
-                    <p>20</p>
-                </div>
-
-                <div class="stat-box">
-                    <h3>Average Score</h3>
-                    <p>85%</p>
-                </div>
-            </div>
         </section>
 
         <section class="actions-section">
@@ -41,16 +25,14 @@
             </div>
         </section>
 
-        <section class="recent-activity-section">
+        <section class="recent-activity-section" id="recentActivitySection">
             <h2>Recent Activity</h2>
-            <ul class="recent-activity-list">
-                <li>User John Doe conducted an exam on Biology - 01/25/2024</li>
-                <li>User Jane Smith viewed student results - 01/24/2024</li>
-                <!-- Add more recent activities as needed -->
+            <ul class="recent-activity-list" id="recentActivityList">
+                <!-- Dynamic content will be added here -->
             </ul>
         </section>
 
-        <section class="additional-section">
+        <section class="additional-section" id="additionalSection">
             <h2>Additional Section</h2>
             <p>This is an additional section for more content or features.</p>
             <a href="#" class="button">Explore More</a>
@@ -59,6 +41,8 @@
         <footer>
             <p>&copy; 2024 Student Result Management System</p>
         </footer>
+
+        <script src="./js/dashboard.js"></script> 
     </div>
 </body>
 </html>
