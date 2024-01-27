@@ -2,14 +2,31 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+require('dotenv').config()
 
 const app = express();
-const PORT = 3000;
+const PORT =  process.env.PORT || 4000;;
+const uri = process.env.DATABASE_URL;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost/srms');
+
+const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
+
+async function run() {
+  try {
+    // Create a Mongoose client with a MongoClientOptions object to set the Stable API version
+    await mongoose.connect(uri, clientOptions);
+    await mongoose.connection.db.admin().command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await mongoose.disconnect();
+  }
+}
+run().catch(console.dir);
+
 
 const userSchema = new mongoose.Schema({
     username: String,
@@ -47,9 +64,10 @@ app.post('/register', async (req, res) => {
 
 // Login Route
 app.post('/login', async (req, res) => {
+    console.log(res)
     try {
         const { username, password } = req.body;
-        print(username)
+        console.log(username)
         // Find the user in the database
         const user = await User.findOne({ username });
         if (!user) {
@@ -68,6 +86,7 @@ app.post('/login', async (req, res) => {
         res.status(500).send(error.message);
     }
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
