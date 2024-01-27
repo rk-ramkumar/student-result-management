@@ -1,0 +1,11 @@
+{
+  "name": "student-result-management",
+  "version": "1.0.0",
+  "description": "To provide quick and understandable access to exam results for students and universities.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
