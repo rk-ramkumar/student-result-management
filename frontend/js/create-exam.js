@@ -1,4 +1,3 @@
-
 let questionCount = 1; 
 
 function addQuestion() {
@@ -14,26 +13,71 @@ function addQuestion() {
     const questionInput = document.createElement('input');
     questionInput.type = 'text';
     questionInput.name = `question${questionCount}`;
+    questionInput.placeholder = 'Enter the question';
     questionInput.required = true;
     questionDiv.appendChild(questionInput);
 
-    questionCount++;
+    const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'options';
+
+    // Add options dynamically
+    for (let i = 1; i <= 4; i++) {
+        const optionLabel = document.createElement('label');
+        optionLabel.textContent = `Option ${i}: `;
+
+        const optionInput = document.createElement('input');
+        optionInput.type = 'text';
+        optionInput.name = `question${questionCount}_option${i}`;
+        optionInput.placeholder = `Enter option ${i}`;
+        optionInput.required = true;
+
+        const correctAnswerCheckbox = document.createElement('input');
+        correctAnswerCheckbox.type = 'radio';
+        correctAnswerCheckbox.name = `question${questionCount}_correct`;
+        correctAnswerCheckbox.value = i - 1; // Use index as value
+
+        optionLabel.appendChild(optionInput);
+        optionLabel.appendChild(correctAnswerCheckbox);
+        optionsDiv.appendChild(optionLabel);
+    }
+
+    questionDiv.appendChild(optionsDiv);
 
     questionsContainer.appendChild(questionDiv);
+
+    questionCount++;
 }
 
 function createExam() {
     const examTitle = document.getElementById('examTitle').value;
 
     const questions = [];
-    const questionInputs = document.querySelectorAll('.question input');
-    questionInputs.forEach((input) => {
-        questions.push(input.value);
+    const questionDivs = document.querySelectorAll('.question');
+    questionDivs.forEach((questionDiv) => {
+        const questionText = questionDiv.querySelector('input[type="text"]').value;
+
+        const options = [];
+        const optionInputs = questionDiv.querySelectorAll('.options input[type="text"]');
+        optionInputs.forEach((optionInput, index) => {
+            const optionText = optionInput.value;
+            const isCorrect = questionDiv.querySelector(`input[name="question${questionCount}_correct"]:checked`);
+
+            options.push({
+                optionText,
+                isCorrect: isCorrect ? true : false,
+            });
+        });
+
+        questions.push({
+            questionText,
+            options,
+        });
     });
 
     // Send the exam details to the server
     sendExamToServer(examTitle, questions);
 }
+
 
 async function sendExamToServer(examTitle, questions) {
     try {
@@ -50,6 +94,7 @@ async function sendExamToServer(examTitle, questions) {
 
         if (response.ok) {
             const result = await response.json();
+            alert(result.message)
             console.log(result.message);
         } else {
             console.error('Error creating exam:', response.statusText);

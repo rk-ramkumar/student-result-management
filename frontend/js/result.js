@@ -22,7 +22,7 @@ function renderResults(results) {
 
     // Clear existing results
     resultsSection.innerHTML = '';
-
+    console.log(results)
     if (results.length === 0) {
         // Display a message when there are no results
         const noResultsMessage = document.createElement('p');
