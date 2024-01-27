@@ -24,6 +24,7 @@ async function register() {
 
         if (result === 'Registration successful.') {
             // Redirect to the dashboard or another page
+            console.log(window.location.href)
             window.location.href = '/dashboard.html';
         }
     } catch (error) {
